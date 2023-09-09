@@ -14,14 +14,35 @@ canvas.width = canvasWidth * dpr;
 canvas.height = canvasHeight * dpr;
 ctx.scale(dpr, dpr);
 
-ctx.beginPath();
-ctx.arc(100, 100, 50, 0, (Math.PI / 180) * 360); // center's x, center's y, radius, startAngle(radians), endAngle(radians)
 /*
-180 도 = PI 라디안,
-1도 = (PI / 180) 라디안
+ 이 원을 하나의 파티클로 취급하자.
+ 여러개의 파티클을 관리해보자
 */
+class Particle {
+  constructor(x, y, radius) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+  }
 
-ctx.fillStyle = "red";
-ctx.fill();
-// ctx.stroke();
-ctx.closePath();
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, (Math.PI / 180) * 360); // center's x, center's y, radius, startAngle(radians), endAngle(radians)
+    /*
+        180 도 = PI 라디안,
+        1도 = (PI / 180) 라디안
+    */
+
+    ctx.fillStyle = "red";
+    ctx.fill();
+    // ctx.stroke();
+    ctx.closePath();
+  }
+}
+
+const x = 100;
+const y = 100;
+const radius = 50;
+
+const particle = new Particle(x, y, radius);
+particle.draw();
