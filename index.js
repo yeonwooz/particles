@@ -14,4 +14,14 @@ canvas.width = canvasWidth * dpr;
 canvas.height = canvasHeight * dpr;
 ctx.scale(dpr, dpr);
 
-ctx.fillRect(10, 10, 50, 50); // start-x, start-y, rect width, rect height
+ctx.beginPath();
+ctx.arc(100, 100, 50, 0, (Math.PI / 180) * 360); // center's x, center's y, radius, startAngle(radians), endAngle(radians)
+/*
+180 도 = PI 라디안,
+1도 = (PI / 180) 라디안
+*/
+
+ctx.fillStyle = "red";
+ctx.fill();
+// ctx.stroke();
+ctx.closePath();
