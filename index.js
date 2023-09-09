@@ -46,3 +46,10 @@ const radius = 50;
 
 const particle = new Particle(x, y, radius);
 particle.draw();
+
+const animate = () => {
+  window.requestAnimationFrame(animate); // 매 프레임마다 실행되는 무한 재귀함수
+  console.log("animate");
+};
+
+animate();
