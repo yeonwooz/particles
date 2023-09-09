@@ -4,11 +4,11 @@ console.log(canvas);
 const ctx = canvas.getContext("2d");
 const dpr = window.devicePixelRatio; // 해상도 비율|
 
-const canvasWidth = 300;
-const canvasHeight = 300;
+const canvasWidth = innerWidth;
+const canvasHeight = innerHeight;
 
 canvas.style.width = `${canvasWidth}px`;
-canvas.style.height = `${canvasWidth}px`;
+canvas.style.height = `${canvasHeight}px`;
 
 canvas.width = canvasWidth * dpr;
 canvas.height = canvasHeight * dpr;
@@ -44,12 +44,51 @@ const x = 100;
 const y = 100;
 const radius = 50;
 
-const particle = new Particle(x, y, radius);
-particle.draw();
-
-const animate = () => {
-  window.requestAnimationFrame(animate); // 매 프레임마다 실행되는 무한 재귀함수
-  console.log("animate");
+// const particle = new Particle(x, y, radius);
+const particles = [];
+const TOTAL = 5;
+const randumNumBetween = (min, max) => {
+  return Math.random() * (max - min + 1) + min;
 };
 
-animate();
+for (let i = 0; i < TOTAL; i++) {
+  const x = randumNumBetween(0, canvasWidth);
+  const y = randumNumBetween(0, canvasHeight);
+  const radius = randumNumBetween(50, 100);
+  const particle = new Particle(x, y, radius);
+  particles.push(particle);
+}
+// console.log(particles);
+
+/*
+fps 보정
+*/
+let interval = 1000 / 60; // 60fps 기준 (1초에 60프레임)
+let now, delta;
+let then = Date.now();
+
+const animate = particle => {
+  window.requestAnimationFrame(animate); // 매 프레임마다 실행되는 무한 재귀함수 -> 재생횟수가 디스플레이 fps 에 의존함
+  now = Date.now();
+  delta = now - then;
+
+  if (delta < interval) {
+    return;
+  }
+
+  console.log("clear");
+  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+  // 파티클의 y를 1px 이동시키기
+  //   particle.y += 1;
+  console.log("draw");
+  particle.draw();
+
+  then = now - (delta % interval);
+};
+
+// particles.forEach(part => animate(part));
+particles.forEach(part => {
+  console.log(part.draw());
+  //   animate(part);
+});
