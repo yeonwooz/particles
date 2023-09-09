@@ -19,10 +19,18 @@ ctx.scale(dpr, dpr);
  여러개의 파티클을 관리해보자
 */
 class Particle {
-  constructor(x, y, radius) {
+  constructor(x, y, radius, vy) {
     this.x = x;
     this.y = y;
     this.radius = radius;
+    this.vy = vy;
+  }
+
+  update() {
+    this.y += this.vy;
+    if (this.y > innerHeight) {
+      this.y = 0;
+    }
   }
 
   draw() {
@@ -33,7 +41,7 @@ class Particle {
         1도 = (PI / 180) 라디안
     */
 
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "orange";
     ctx.fill();
     // ctx.stroke();
     ctx.closePath();
@@ -55,7 +63,8 @@ for (let i = 0; i < TOTAL; i++) {
   const x = randumNumBetween(0, canvasWidth);
   const y = randumNumBetween(0, canvasHeight);
   const radius = randumNumBetween(50, 100);
-  const particle = new Particle(x, y, radius);
+  const vy = randumNumBetween(1, 5);
+  const particle = new Particle(x, y, radius, vy);
   particles.push(particle);
 }
 // console.log(particles);
@@ -80,13 +89,9 @@ const animate = () => {
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
   // 파티클의 y를 1px 이동시키기
-  //   particles[0].y += 1;
-  //   particles[1].y += 1;
-  //   console.log("draw");
-  //   particles[0].draw();
-  //   particles[1].draw();
+
   particles.forEach(particle => {
-    particle.y += randumNumBetween(0, 10);
+    particle.update();
     particle.draw();
   });
 
