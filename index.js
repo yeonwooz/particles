@@ -67,7 +67,7 @@ let interval = 1000 / 60; // 60fps 기준 (1초에 60프레임)
 let now, delta;
 let then = Date.now();
 
-const animate = particle => {
+const animate = () => {
   window.requestAnimationFrame(animate); // 매 프레임마다 실행되는 무한 재귀함수 -> 재생횟수가 디스플레이 fps 에 의존함
   now = Date.now();
   delta = now - then;
@@ -80,15 +80,17 @@ const animate = particle => {
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
   // 파티클의 y를 1px 이동시키기
-  //   particle.y += 1;
-  console.log("draw");
-  particle.draw();
+  //   particles[0].y += 1;
+  //   particles[1].y += 1;
+  //   console.log("draw");
+  //   particles[0].draw();
+  //   particles[1].draw();
+  particles.forEach(particle => {
+    particle.y += randumNumBetween(0, 10);
+    particle.draw();
+  });
 
   then = now - (delta % interval);
 };
 
-// particles.forEach(part => animate(part));
-particles.forEach(part => {
-  console.log(part.draw());
-  //   animate(part);
-});
+animate();
