@@ -1,21 +1,6 @@
-const canvas = document.querySelector("canvas");
-console.log(canvas);
-
-const ctx = canvas.getContext("2d");
-const dpr = window.devicePixelRatio; // 해상도 비율|
-
-const canvasWidth = innerWidth;
-const canvasHeight = innerHeight;
-
-canvas.style.width = `${canvasWidth}px`;
-canvas.style.height = `${canvasHeight}px`;
-
-canvas.width = canvasWidth * dpr;
-canvas.height = canvasHeight * dpr;
-ctx.scale(dpr, dpr);
-
 /*
- 이 원을 하나의 파티클로 취급하자.
+ Particle
+ 원을 하나의 파티클로 취급하자.
  여러개의 파티클을 관리해보자
 */
 class Particle {
@@ -36,9 +21,9 @@ class Particle {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, (Math.PI / 180) * 360); // center's x, center's y, radius, startAngle(radians), endAngle(radians)
     /*
-        180 도 = PI 라디안,
-        1도 = (PI / 180) 라디안
-    */
+          180 도 = PI 라디안,
+          1도 = (PI / 180) 라디안
+      */
 
     ctx.fillStyle = "orange";
     ctx.fill();
@@ -47,29 +32,48 @@ class Particle {
   }
 }
 
-const x = 100;
-const y = 100;
-const radius = 50;
+/*
+Canvas
+*/
+const canvas = document.querySelector("canvas");
 
-// const particle = new Particle(x, y, radius);
-export const particles = [];
-const TOTAL = 10;
+const ctx = canvas.getContext("2d");
+const dpr = window.devicePixelRatio; // 해상도 비율|
+
+let canvasWidth, canvasHeight;
+export let particles;
+
 const randumNumBetween = (min, max) => {
   return Math.random() * (max - min + 1) + min;
 };
 
-for (let i = 0; i < TOTAL; i++) {
-  const x = randumNumBetween(0, canvasWidth);
-  const y = randumNumBetween(0, canvasHeight);
-  const radius = randumNumBetween(20, 70);
-  const vy = randumNumBetween(1, 5);
-  const particle = new Particle(x, y, radius, vy);
-  particles.push(particle);
+function init() {
+  canvasWidth = innerWidth;
+  canvasHeight = innerHeight;
+
+  canvas.style.width = `${canvasWidth}px`;
+  canvas.style.height = `${canvasHeight}px`;
+
+  canvas.width = canvasWidth * dpr;
+  canvas.height = canvasHeight * dpr;
+  ctx.scale(dpr, dpr);
+  particles = [];
+
+  const TOTAL = canvasWidth / 50;
+  // const particle = new Particle(x, y, radius);
+  for (let i = 0; i < TOTAL; i++) {
+    const x = randumNumBetween(0, canvasWidth);
+    const y = randumNumBetween(0, canvasHeight);
+    const radius = randumNumBetween(5, 10);
+    const vy = randumNumBetween(1, 5);
+    const particle = new Particle(x, y, radius, vy);
+    particles.push(particle);
+  }
+  // console.log(particles);
 }
-// console.log(particles);
 
 /*
-fps 보정
+fps 보정 animation
 */
 let interval = 1000 / 60; // 60fps 기준 (1초에 60프레임)
 let now, delta;
@@ -84,7 +88,6 @@ const animate = () => {
     return;
   }
 
-  console.log("clear");
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
   // 파티클의 y를 1px 이동시키기
@@ -104,4 +107,11 @@ const animate = () => {
   then = now - (delta % interval);
 };
 
-animate();
+window.addEventListener("load", () => {
+  init();
+  animate();
+});
+
+window.addEventListener("resize", () => {
+  init();
+});
