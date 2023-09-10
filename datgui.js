@@ -13,7 +13,9 @@ const controls = new (function () {
 let gui = new dat.GUI();
 
 const f1 = gui.addFolder("Gooey Effect");
+f1.open();
 const f2 = gui.addFolder("Particle Property");
+f2.open();
 
 f1.add(controls, "blurValue", 0, 100).onChange(value => {
   feGaussianBlur.setAttribute("stdDeviation", value);
