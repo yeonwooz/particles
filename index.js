@@ -24,7 +24,7 @@ class Particle {
     this.y = y;
     this.radius = radius;
     this.vy = vy;
-    this.acc = 1.05;
+    this.acc = 1.03;
   }
 
   update() {
@@ -52,7 +52,7 @@ const y = 100;
 const radius = 50;
 
 // const particle = new Particle(x, y, radius);
-const particles = [];
+export const particles = [];
 const TOTAL = 10;
 const randumNumBetween = (min, max) => {
   return Math.random() * (max - min + 1) + min;
