@@ -1,6 +1,6 @@
 import CanvasOption from "./CanvasOption.js";
 import Particle from "./Particle.js";
-
+import {randomNumBetween} from "./utils.js";
 class Canvas extends CanvasOption {
   constructor() {
     super();
@@ -22,10 +22,10 @@ class Canvas extends CanvasOption {
   }
 
   createParticles() {
-    const PARTICLE_NUM = 1;
+    const PARTICLE_NUM = 10;
     for (let i = 0; i < PARTICLE_NUM; i++) {
-      const x = 300;
-      const y = 300;
+      const x = randomNumBetween(0, this.canvasWidth);
+      const y = randomNumBetween(0, this.canvasHeight);
       this.particles.push(new Particle(x, y));
     }
   }
