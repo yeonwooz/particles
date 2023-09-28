@@ -36,7 +36,7 @@ class Canvas extends CanvasOption {
       const vx = r * Math.cos(angle);
       const vy = r * Math.sin(angle);
 
-      const opacity = randomNumBetween(0.3, 0.9);
+      const opacity = randomNumBetween(0.6, 0.9);
       this.particles.push(new Particle(x, y, vx, vy, opacity));
     }
   }
@@ -54,7 +54,7 @@ class Canvas extends CanvasOption {
       }
 
       // this.ctx.fillRect(100, 100, 200, 200);
-      this.ctx.fillStyle = this.bgColor;
+      this.ctx.fillStyle = this.bgColor + "40"; // #0000010
       this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
       // this.particles.forEach((particle, index) => {
