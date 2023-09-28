@@ -36,7 +36,8 @@ class Canvas extends CanvasOption {
       const vx = r * Math.cos(angle);
       const vy = r * Math.sin(angle);
 
-      this.particles.push(new Particle(x, y, vx, vy));
+      const opacity = randomNumBetween(0.3, 0.9);
+      this.particles.push(new Particle(x, y, vx, vy, opacity));
     }
   }
 
