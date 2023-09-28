@@ -19,10 +19,14 @@ class Canvas extends CanvasOption {
     this.canvas.style.height = `${this.canvasHeight}px`;
 
     this.createParticles();
+
+    setInterval(() => {
+      this.createParticles();
+    }, 2000);
   }
 
   createParticles() {
-    const PARTICLE_NUM = 10;
+    const PARTICLE_NUM = 20;
     const x = randomNumBetween(0, this.canvasWidth);
     const y = randomNumBetween(0, this.canvasHeight);
     for (let i = 0; i < PARTICLE_NUM; i++) {
