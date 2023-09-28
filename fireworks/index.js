@@ -49,14 +49,23 @@ class Canvas extends CanvasOption {
       this.ctx.fillStyle = this.bgColor;
       this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-      this.particles.forEach((particle, index) => {
+      // this.particles.forEach((particle, index) => {
+      //   particle.update();
+      //   particle.draw();
+
+      //   if (particle.opacity < 0) {
+      //     this.particles.splice(index, 1);
+      //   }
+      // });
+
+      this.particles.forEach(particle => {
         particle.update();
         particle.draw();
-
-        if (particle.opacity < 0) {
-          this.particles.splice(index, 1);
-        }
       });
+
+      // filter the array to prevent the omission the next element of a sliced one
+      // => Bad Performance..?
+      this.particles = this.particles.filter(particle => particle.opacity >= 0);
 
       then = now - (delta % this.interval);
     };
