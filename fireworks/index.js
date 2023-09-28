@@ -26,11 +26,11 @@ class Canvas extends CanvasOption {
   }
 
   createParticles() {
-    const PARTICLE_NUM = 40;
+    const PARTICLE_NUM = 400;
     const x = randomNumBetween(0, this.canvasWidth);
     const y = randomNumBetween(0, this.canvasHeight);
     for (let i = 0; i < PARTICLE_NUM; i++) {
-      const r = randomNumBetween(0, 3);
+      const r = randomNumBetween(2, 100) * 0.2;
       const angle = (Math.PI / 180) * randomNumBetween(0, 360);
 
       const vx = r * Math.cos(angle);
