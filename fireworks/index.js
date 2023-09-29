@@ -1,10 +1,12 @@
 import CanvasOption from "./CanvasOption.js";
 import Particle from "./Particle.js";
 import {hypotenuse, randomNumBetween} from "../utils.js";
+import Tail from "./Tail.js";
 class Canvas extends CanvasOption {
   constructor() {
     super();
 
+    this.tails = [];
     this.particles = [];
   }
 
@@ -18,11 +20,18 @@ class Canvas extends CanvasOption {
     this.canvas.style.width = `${this.canvasWidth}px`;
     this.canvas.style.height = `${this.canvasHeight}px`;
 
-    this.createParticles();
+    // this.createParticles();
 
-    setInterval(() => {
-      this.createParticles();
-    }, 2000);
+    // setInterval(() => {
+    //   this.createParticles();
+    // }, 2000);
+  }
+
+  createTail() {
+    const x = randomNumBetween(this.canvasWidth * 0.2, this.canvasWidth * 0.8);
+    const vy = this.canvasHeight * randomNumBetween(0.01, 0.015) * -1;
+    const color = "white";
+    this.tails.push(new Tail(x, vy, color));
   }
 
   createParticles() {
@@ -47,7 +56,7 @@ class Canvas extends CanvasOption {
     let then = Date.now();
 
     const frame = () => {
-      window.requestAnimationFrame(frame);
+      requestAnimationFrame(frame);
       now = Date.now();
       delta = now - then;
       if (delta < this.interval) {
@@ -67,14 +76,32 @@ class Canvas extends CanvasOption {
       //   }
       // });
 
-      this.particles.forEach(particle => {
+      if (Math.random() < 0.03) {
+        this.createTail();
+      }
+      this.tails.forEach((tail, idx) => {
+        tail.update();
+        tail.draw();
+
+        if (tail.vy > -1) {
+          this.tails.splice(idx, 1);
+          this.createParticles();
+        }
+      });
+      // this.tails = this.tails.filter(tail => tail.vy <= -1);
+
+      this.particles.forEach((particle, idx) => {
         particle.update();
         particle.draw();
+
+        if (particle.opacity < 0) {
+          this.particles.splice(idx, 1);
+        }
       });
 
       // filter the array to prevent the omission the next element of a sliced one
       // => Bad Performance..?
-      this.particles = this.particles.filter(particle => particle.opacity >= 0);
+      // this.particles = this.particles.filter(particle => particle.opacity >= 0);
 
       then = now - (delta % this.interval);
     };
