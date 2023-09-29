@@ -2,12 +2,14 @@ import CanvasOption from "./CanvasOption.js";
 import Particle from "./Particle.js";
 import {hypotenuse, randomNumBetween} from "../utils.js";
 import Tail from "./Tail.js";
+import Spark from "./Sparks.js";
 class Canvas extends CanvasOption {
   constructor() {
     super();
 
     this.tails = [];
     this.particles = [];
+    this.sparks = [];
   }
 
   init() {
@@ -95,6 +97,10 @@ class Canvas extends CanvasOption {
         particle.update();
         particle.draw();
 
+        if (Math.random() < 0.1) {
+          this.sparks.push(new Spark(particle.x, particle.y, 0.3));
+        }
+
         if (particle.opacity < 0) {
           this.particles.splice(idx, 1);
         }
@@ -103,6 +109,15 @@ class Canvas extends CanvasOption {
       // filter the array to prevent the omission the next element of a sliced one
       // => Bad Performance..?
       // this.particles = this.particles.filter(particle => particle.opacity >= 0);
+
+      this.sparks.forEach((spark, idx) => {
+        spark.update();
+        spark.draw();
+
+        if (spark.opacity < 0) {
+          this.sparks.splice(idx, 1);
+        }
+      });
 
       then = now - (delta % this.interval);
     };
