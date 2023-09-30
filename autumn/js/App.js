@@ -1,4 +1,6 @@
+import {randomNumBetween} from "../../utils.js";
 import Background from "./Background.js";
+import Rain from "./Rain.js";
 
 export default class App {
   static canvas = document.querySelector("canvas");
@@ -11,6 +13,7 @@ export default class App {
   constructor() {
     this.background = new Background({img: document.querySelector("#bg-img")});
     window.addEventListener("resize", this.resize.bind(this)); // bind to the App instead of window
+    this.rains = [];
   }
 
   resize() {
@@ -24,6 +27,14 @@ export default class App {
 
     App.canvas.style.width = `${width}px`;
     App.canvas.style.height = `${width * (3 / 4)}px`;
+  }
+
+  createRain() {
+    const x = randomNumBetween(App.width * 0.2, App.width * 0.8);
+    const vy = App.height * randomNumBetween(0.01, 0.015) * -1;
+    const colorDeg = randomNumBetween(0, 360);
+    console.log(x, vy, colorDeg);
+    this.rains.push(new Rain(x, vy, colorDeg));
   }
 
   render() {
@@ -42,7 +53,19 @@ export default class App {
       App.ctx.clearRect(0, 0, App.width, App.height);
       App.ctx.fillRect(50, 50, 100, 100);
 
-      this.background.draw();
+      // this.background.draw();
+
+      if (Math.random() < 0.03) {
+        this.createRain();
+      }
+      this.rains.forEach((rain, idx) => {
+        rain.update();
+        rain.draw();
+
+        if (rain.vy > -0.7) {
+          this.rains.splice(idx, 1);
+        }
+      });
 
       then = now - (delta % App.interval);
     };
