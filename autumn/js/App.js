@@ -9,6 +9,7 @@ export default class App {
   static interval = 1000 / 60;
   static width = 1024;
   static height = 768;
+  static bgColor = "#000000";
 
   constructor() {
     this.background = new Background({img: document.querySelector("#bg-img")});
@@ -33,7 +34,6 @@ export default class App {
     const x = randomNumBetween(App.width * 0.2, App.width * 0.8);
     const vy = App.height * randomNumBetween(0.01, 0.015) * -1;
     const colorDeg = randomNumBetween(0, 360);
-    console.log(x, vy, colorDeg);
     this.rains.push(new Rain(x, vy, colorDeg));
   }
 
@@ -49,11 +49,13 @@ export default class App {
       if (delta < App.interval) {
         return;
       }
-
-      App.ctx.clearRect(0, 0, App.width, App.height);
-      App.ctx.fillRect(50, 50, 100, 100);
-
       this.background.draw();
+
+      App.ctx.fillStyle = App.bgColor + "40"; // #0000010
+      App.ctx.fillRect(0, 0, App.width, App.height);
+
+      // App.ctx.clearRect(0, 0, App.width, App.height);
+      // App.ctx.fillRect(50, 50, 100, 100);
 
       if (Math.random() < 0.03) {
         this.createRain();
