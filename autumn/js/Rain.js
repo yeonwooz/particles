@@ -6,20 +6,16 @@ export default class Rain extends CanvasOption {
     super();
     this.x = x;
     this.angle = randomNumBetween(0, 2);
-    this.y = this.canvasHeight;
+    this.y = 0;
     this.vy = vy;
     this.colorDeg = colorDeg;
-    this.friction = 0.985;
+    this.friction = 1.015;
+    this.opacity = 1;
   }
 
   update() {
     this.vy *= this.friction;
-    this.y += this.vy;
-
-    this.angle += 1;
-    this.x += Math.cos(this.angle) * this.vy * 0.2;
-
-    this.opacity = -this.vy * 0.1;
+    this.y -= this.vy;
   }
 
   draw() {

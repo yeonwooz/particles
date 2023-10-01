@@ -33,7 +33,8 @@ export default class App {
   createRain() {
     const x = randomNumBetween(App.width * 0.2, App.width * 0.8);
     const vy = App.height * randomNumBetween(0.01, 0.015) * -1;
-    const colorDeg = randomNumBetween(0, 360);
+    // const colorDeg = randomNumBetween(0, 360);
+    const colorDeg = 200;
     this.rains.push(new Rain(x, vy, colorDeg));
   }
 
@@ -57,7 +58,7 @@ export default class App {
       // App.ctx.clearRect(0, 0, App.width, App.height);
       // App.ctx.fillRect(50, 50, 100, 100);
 
-      if (Math.random() < 0.03) {
+      if (Math.random() < 0.5) {
         this.createRain();
       }
       this.rains.forEach((rain, idx) => {
