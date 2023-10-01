@@ -3,6 +3,7 @@ import Particle from "./Particle.js";
 import {hypotenuse, randomNumBetween} from "../utils.js";
 import Tail from "./Tail.js";
 import Spark from "./Spark.js";
+import Background from "../autumn/js/Background.js";
 class Canvas extends CanvasOption {
   constructor() {
     super();
@@ -10,6 +11,7 @@ class Canvas extends CanvasOption {
     this.tails = [];
     this.particles = [];
     this.sparks = [];
+    this.background = new Background({img: document.querySelector("#bg-img")});
   }
 
   init() {
@@ -66,6 +68,7 @@ class Canvas extends CanvasOption {
       if (delta < this.interval) {
         return;
       }
+      this.background.draw();
 
       // this.ctx.fillRect(100, 100, 200, 200);
       this.ctx.fillStyle = this.bgColor + "40"; // #0000010

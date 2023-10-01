@@ -53,7 +53,7 @@ export default class App {
       App.ctx.clearRect(0, 0, App.width, App.height);
       App.ctx.fillRect(50, 50, 100, 100);
 
-      // this.background.draw();
+      this.background.draw();
 
       if (Math.random() < 0.03) {
         this.createRain();
