@@ -29,9 +29,9 @@ export default class App {
   }
 
   createRain() {
-    const x = randomNumBetween(App.width * 0.2, App.width * 0.8);
-    const vy = App.height * randomNumBetween(0.01, 0.015) * -1;
-    const colorDeg = 200;
+    const x = randomNumBetween(App.width * -0.01, App.width * 0.99);
+    const vy = App.height * randomNumBetween(0.015, 0.02) * -1;
+    const colorDeg = 187;
     this.rains.push(new Rain(x, vy, colorDeg));
   }
 
@@ -52,10 +52,7 @@ export default class App {
       App.ctx.fillStyle = App.bgColor + "40"; // #0000010
       App.ctx.fillRect(0, 0, App.width, App.height);
 
-      // App.ctx.clearRect(0, 0, App.width, App.height);
-      // App.ctx.fillRect(50, 50, 100, 100);
-
-      if (Math.random() < 0.5) {
+      if (Math.random() < 0.9) {
         this.createRain();
       }
       this.rains.forEach((rain, idx) => {
