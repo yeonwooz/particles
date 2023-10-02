@@ -1,4 +1,5 @@
 import CanvasOption from "../../boilerplate/js/CanvasOption.js";
+import {randomNumBetween} from "../../utils.js";
 
 export default class Rain extends CanvasOption {
   constructor(x, vy, colorDeg) {
@@ -8,7 +9,7 @@ export default class Rain extends CanvasOption {
     this.vy = vy;
     this.colorDeg = colorDeg;
     this.acc = 1.05;
-    this.opacity = 1;
+    this.opacity = 0.3;
   }
 
   update() {
@@ -17,14 +18,19 @@ export default class Rain extends CanvasOption {
   }
 
   draw() {
-    this.ctx.fillStyle = `hsla(${this.colorDeg}, 40%, 76%, ${this.opacity})`;
+    this.ctx.strokeStyle = `hsla(${this.colorDeg}, 40%, 76%, ${this.opacity})`;
+    this.ctx.lineWidth = randomNumBetween(1, 2);
+    this.ctx.lineCap = "round";
 
     // https://zetcode.com/gfx/html5canvas/transparency/
-    this.ctx.globalAlpha = 0.3;
 
     this.ctx.beginPath();
-    this.ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
-    this.ctx.fill();
+    this.ctx.moveTo(this.x, this.y);
+    const rainLength = randomNumBetween(10, 200);
+    this.ctx.lineTo(this.x, this.y - rainLength);
+
+    // this.ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+    this.ctx.stroke();
     this.ctx.closePath();
   }
 }

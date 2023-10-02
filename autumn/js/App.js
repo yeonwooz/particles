@@ -49,7 +49,7 @@ export default class App {
       }
       this.background.draw();
 
-      App.ctx.fillStyle = App.bgColor + "40"; // #0000010
+      App.ctx.fillStyle = App.bgColor + "50"; // #0000010
       App.ctx.fillRect(0, 0, App.width, App.height);
 
       if (Math.random() < 0.9) {
