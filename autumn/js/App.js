@@ -18,13 +18,11 @@ export default class App {
   }
 
   resize() {
-    // console.log(this);
     App.canvas.width = App.width * App.dpr;
     App.canvas.height = App.height * App.dpr;
     App.ctx.scale(App.dpr, App.dpr);
 
-    const width =
-      innerWidth > innerHeight ? innerHeight * 0.9 : innerWidth * 0.9;
+    const width = innerWidth > innerHeight ? innerHeight : innerWidth;
 
     App.canvas.style.width = `${width}px`;
     App.canvas.style.height = `${width * (3 / 4)}px`;
@@ -33,7 +31,6 @@ export default class App {
   createRain() {
     const x = randomNumBetween(App.width * 0.2, App.width * 0.8);
     const vy = App.height * randomNumBetween(0.01, 0.015) * -1;
-    // const colorDeg = randomNumBetween(0, 360);
     const colorDeg = 200;
     this.rains.push(new Rain(x, vy, colorDeg));
   }
