@@ -17,10 +17,11 @@ export default class App {
     this.background = new Background({img: document.querySelector("#bg-img")});
     window.addEventListener("resize", this.resize.bind(this)); // bind to the App instead of window
 
-    // console.log(document.querySelector("#leaf-yellow-1"));
     this.leafImages = [
       document.querySelector("#leaf-yellow-1"),
       document.querySelector("#leaf-yellow-2"),
+      document.querySelector("#leaf-yellow-3"),
+      document.querySelector("#leaf-red-1"),
     ];
     this.mouse = new Mouse(App.canvas);
     this.windVector = 0;
@@ -50,9 +51,8 @@ export default class App {
     const x = randomNumBetween(App.width * -0.01, App.width * 0.99);
     const vy = App.height * randomNumBetween(0.001, 0.003) * -1;
 
-    const idx = Math.floor(randomNumBetween(1, 2.9)) % 2 === 0 ? 0 : 1;
-
-    this.leaves.push(new Leaf(x, vy, this.leafImages[idx]));
+    const idx = Math.floor(randomNumBetween(1, 5)) % 4;
+    this.leaves.push(new Leaf(x, vy, this.windVector, this.leafImages[idx]));
   }
 
   render() {
@@ -89,14 +89,14 @@ export default class App {
         }
       });
 
-      if (Math.random() < 0.01) {
+      if (Math.random() < 0.05) {
         this.createLeaf();
       }
 
       this.leaves.forEach((leaf, idx) => {
         leaf.update(this.windVector);
         leaf.draw();
-        if (leaf.vy < -5) {
+        if (leaf.vy < -50) {
           this.leaves.splice(idx, 1);
         }
       });
