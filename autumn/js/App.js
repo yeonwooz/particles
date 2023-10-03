@@ -1,5 +1,6 @@
 import {randomNumBetween} from "../../utils.js";
 import Background from "./Background.js";
+import Leaf from "./Leaf.js";
 import Mouse from "./Mouse.js";
 import Rain from "./Rain.js";
 
@@ -16,9 +17,11 @@ export default class App {
     this.background = new Background({img: document.querySelector("#bg-img")});
     window.addEventListener("resize", this.resize.bind(this)); // bind to the App instead of window
 
+    this.leafImage = document.querySelector("#bg-img");
     this.mouse = new Mouse(App.canvas);
     this.windVector = 0;
     this.rains = [];
+    this.leaves = [];
   }
 
   resize() {
@@ -37,6 +40,12 @@ export default class App {
     const vy = App.height * randomNumBetween(0.015, 0.02) * -1;
     const colorDeg = 187;
     this.rains.push(new Rain(x, vy, colorDeg, this.windVector));
+  }
+
+  createLeaf() {
+    const x = randomNumBetween(App.width * -0.01, App.width * 0.99);
+    const vy = App.height * randomNumBetween(0.001, 0.003) * -1;
+    this.leaves.push(new Leaf(x, vy, this.leafImage));
   }
 
   render() {
@@ -63,12 +72,25 @@ export default class App {
       if (Math.random() < 0.9) {
         this.createRain();
       }
+
       this.rains.forEach((rain, idx) => {
         rain.update(this.windVector);
         rain.draw();
 
-        if (rain.vy > -0.7) {
+        if (rain.vy < -50) {
           this.rains.splice(idx, 1);
+        }
+      });
+
+      if (Math.random() < 0.005) {
+        this.createLeaf();
+      }
+
+      this.leaves.forEach((leaf, idx) => {
+        leaf.update(this.windVector);
+        leaf.draw();
+        if (leaf.vy < -5) {
+          this.leaves.splice(idx, 1);
         }
       });
 
