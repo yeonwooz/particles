@@ -16,8 +16,14 @@ export default class Leaf extends CanvasOption {
   }
 
   draw() {
-    const width = 30;
-    const height = 30;
-    this.ctx.drawImage(this.img, this.x - width, this.y - height, 30, 30);
+    const width = 70;
+    const height = 70;
+    this.ctx.drawImage(
+      this.img,
+      this.x - width,
+      this.y - height,
+      width,
+      height,
+    );
   }
 }
