@@ -1,5 +1,6 @@
 import {randomNumBetween} from "../../utils.js";
 import Background from "./Background.js";
+import Mouse from "./Mouse.js";
 import Rain from "./Rain.js";
 
 export default class App {
@@ -14,6 +15,9 @@ export default class App {
   constructor() {
     this.background = new Background({img: document.querySelector("#bg-img")});
     window.addEventListener("resize", this.resize.bind(this)); // bind to the App instead of window
+
+    this.mouse = new Mouse(App.canvas);
+    this.windDirection = 0;
     this.rains = [];
   }
 
@@ -48,6 +52,15 @@ export default class App {
         return;
       }
       this.background.draw();
+
+      const mouseXPos = this.mouse.pos.x;
+      if (mouseXPos < innerWidth / 2 - 20) {
+        this.windDirection = -1;
+      } else if (mouseXPos > innerWidth / 2 + 20) {
+        this.windDirection = 1;
+      } else {
+        this.windDirection = 0;
+      }
 
       App.ctx.fillStyle = App.bgColor + "50"; // #0000010
       App.ctx.fillRect(0, 0, App.width, App.height);

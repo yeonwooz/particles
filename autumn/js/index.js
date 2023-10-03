@@ -1,8 +1,7 @@
 import App from "./App.js";
 
-const app = new App();
-
 window.addEventListener("load", () => {
+  const app = new App();
   app.resize();
   app.render();
 });
