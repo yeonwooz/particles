@@ -29,7 +29,7 @@ export default class Rain extends CanvasOption {
     this.ctx.beginPath();
     this.ctx.moveTo(this.x, this.y);
     const rainLength = randomNumBetween(10, 200);
-    this.ctx.lineTo(this.x + -this.windVector, this.y - rainLength);
+    this.ctx.lineTo(this.x + -this.windVector * 0.5, this.y - rainLength);
 
     // this.ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
     this.ctx.stroke();
