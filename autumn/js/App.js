@@ -17,7 +17,7 @@ export default class App {
     window.addEventListener("resize", this.resize.bind(this)); // bind to the App instead of window
 
     this.mouse = new Mouse(App.canvas);
-    this.windDirection = 0;
+    this.windVector = 0;
     this.rains = [];
   }
 
@@ -36,7 +36,7 @@ export default class App {
     const x = randomNumBetween(App.width * -0.01, App.width * 0.99);
     const vy = App.height * randomNumBetween(0.015, 0.02) * -1;
     const colorDeg = 187;
-    this.rains.push(new Rain(x, vy, colorDeg));
+    this.rains.push(new Rain(x, vy, colorDeg, this.windVector));
   }
 
   render() {
@@ -54,13 +54,8 @@ export default class App {
       this.background.draw();
 
       const mouseXPos = this.mouse.pos.x;
-      if (mouseXPos < innerWidth / 2 - 20) {
-        this.windDirection = -1;
-      } else if (mouseXPos > innerWidth / 2 + 20) {
-        this.windDirection = 1;
-      } else {
-        this.windDirection = 0;
-      }
+
+      this.windVector = mouseXPos * 2 - innerWidth;
 
       App.ctx.fillStyle = App.bgColor + "50"; // #0000010
       App.ctx.fillRect(0, 0, App.width, App.height);
@@ -69,7 +64,7 @@ export default class App {
         this.createRain();
       }
       this.rains.forEach((rain, idx) => {
-        rain.update();
+        rain.update(this.windVector);
         rain.draw();
 
         if (rain.vy > -0.7) {
