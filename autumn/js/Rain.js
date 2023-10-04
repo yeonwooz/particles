@@ -30,14 +30,10 @@ export default class Rain extends CanvasOption {
     this.ctx.lineWidth = randomNumBetween(1, 2);
     this.ctx.lineCap = "round";
 
-    // https://zetcode.com/gfx/html5canvas/transparency/
-
     this.ctx.beginPath();
     this.ctx.moveTo(this.x, this.y);
     const rainLength = randomNumBetween(100, 200);
     this.ctx.lineTo(this.x + -this.windVector * 0.07, this.y - rainLength);
-
-    // this.ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
     this.ctx.stroke();
     this.ctx.closePath();
   }
