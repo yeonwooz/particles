@@ -6,7 +6,7 @@ export default class Mouse {
     this.radius = 100;
 
     canvas.onmousemove = e => this.pos.setXY(e.clientX, e.clientY);
-    canvas.ontoucemove = e =>
+    canvas.ontouchmove = e =>
       this.pos.setXY(e.touches[0].clientX, e.touches[0].clientY);
   }
 }

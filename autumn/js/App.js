@@ -14,14 +14,16 @@ export default class App {
   static bgColor = "#000000";
 
   constructor() {
-    this.background = new Background({img: document.querySelector("#bg-img")});
+    this.background = new Background({
+      img: document.querySelector("#autumn-forest"),
+    });
     window.addEventListener("resize", this.resize.bind(this)); // bind to the App instead of window
 
     this.leafImages = [
-      document.querySelector("#leaf-yellow-1"),
-      document.querySelector("#leaf-yellow-2"),
-      document.querySelector("#leaf-yellow-3"),
-      document.querySelector("#leaf-red-1"),
+      document.querySelector("#yellow-leaf-1"),
+      document.querySelector("#yellow-leaf-2"),
+      document.querySelector("#yellow-leaf-3"),
+      document.querySelector("#red-leaf"),
     ];
     this.mouse = new Mouse(App.canvas);
     this.windVector = 0;
@@ -34,7 +36,7 @@ export default class App {
     App.canvas.height = App.height * App.dpr;
     App.ctx.scale(App.dpr, App.dpr);
 
-    const width = innerWidth > innerHeight ? innerHeight : innerWidth;
+    const width = Math.min(innerWidth, innerHeight);
 
     App.canvas.style.width = `${width}px`;
     App.canvas.style.height = `${width * (3 / 4)}px`;
