@@ -11,12 +11,18 @@ export default class Rain extends CanvasOption {
     this.acc = 1.05;
     this.opacity = 0.3;
     this.windVector = windVector;
+    this.frameCount = 0;
   }
 
   update(curWindVector) {
     this.vy *= this.acc;
     this.y -= this.vy;
-    this.windVector = curWindVector;
+    this.frameCount++;
+
+    if (this.frameCount >= 30) {
+      this.windVector = curWindVector;
+      this.frameCount = 0;
+    }
   }
 
   draw() {
@@ -29,7 +35,7 @@ export default class Rain extends CanvasOption {
     this.ctx.beginPath();
     this.ctx.moveTo(this.x, this.y);
     const rainLength = randomNumBetween(100, 200);
-    this.ctx.lineTo(this.x + -this.windVector * 0.05, this.y - rainLength);
+    this.ctx.lineTo(this.x + -this.windVector * 0.07, this.y - rainLength);
 
     // this.ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
     this.ctx.stroke();
