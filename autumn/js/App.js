@@ -58,12 +58,11 @@ export default class App {
   }
 
   render() {
-    let now, delta;
-    let then = Date.now();
+    let delta;
+    let then = performance.now();
 
-    const frame = () => {
+    const frame = (now) => {
       requestAnimationFrame(frame);
-      now = Date.now();
       delta = now - then;
 
       if (delta < App.interval) {
