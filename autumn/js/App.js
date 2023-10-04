@@ -45,7 +45,7 @@ export default class App {
   createRain() {
     const x = randomNumBetween(App.width * -0.01, App.width * 0.99);
     const vy = App.height * randomNumBetween(0.015, 0.02) * -1;
-    const colorDeg = 187;
+    const colorDeg = 180;
     this.rains.push(new Rain(x, vy, colorDeg, this.windVector));
   }
 
