@@ -14,10 +14,16 @@ export default class App {
   static bgColor = "#000000";
 
   constructor() {
+    window.addEventListener("resize", this.resize.bind(this)); // bind to the App instead of window
+
     this.background = new Background({
       img: document.querySelector("#autumn-forest"),
     });
-    window.addEventListener("resize", this.resize.bind(this)); // bind to the App instead of window
+
+    this.mouse = new Mouse(App.canvas);
+    this.windVector = 0;
+
+    this.rains = [];
 
     this.leafImages = [
       document.querySelector("#yellow-leaf-1"),
@@ -25,9 +31,6 @@ export default class App {
       document.querySelector("#yellow-leaf-3"),
       document.querySelector("#red-leaf"),
     ];
-    this.mouse = new Mouse(App.canvas);
-    this.windVector = 0;
-    this.rains = [];
     this.leaves = [];
   }
 
@@ -70,12 +73,11 @@ export default class App {
       }
       this.background.draw();
 
-      const mouseXPos = this.mouse.pos.x;
-
-      this.windVector = mouseXPos * 2 - innerWidth;
-
       App.ctx.fillStyle = App.bgColor + "50"; // #0000010
       App.ctx.fillRect(0, 0, App.width, App.height);
+
+      const mouseXPos = this.mouse.pos.x;
+      this.windVector = mouseXPos * 2 - innerWidth;
 
       if (Math.random() < 0.9) {
         this.createRain();
